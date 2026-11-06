@@ -525,9 +525,9 @@ function presence(name, day, h) {
         return { rank: 0, cls: "in", text: "e la școală" };
     }
     if (prev === h - 1) return { rank: 1, cls: "near", text: "a terminat după " + lessonName(prev) };
-    if (next === h + 1) return { rank: 1, cls: "near", text: "vine la " + lessonName(next) };
+    if (next === h + 1) return { rank: 1, cls: "near", text: "are " + lessonName(next) };
     if (prev !== null) return { rank: 2, cls: "far", text: "a terminat după " + lessonName(prev) };
-    return { rank: 2, cls: "far", text: "vine la " + lessonName(next) };
+    return { rank: 2, cls: "far", text: "are " + lessonName(next) };
 }
 
 function currentLesson() {
