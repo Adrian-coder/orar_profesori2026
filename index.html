@@ -175,7 +175,71 @@
         margin-top: 18px;
     }
 
+    /* ===== Taburi ===== */
+    .tabs { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 14px; }
+    .tabs .tab {
+        height: auto; padding: 11px 18px; border-radius: 12px;
+        background: white; color: #173f63; border: 1px solid #cbd5e1; font-size: 15px;
+    }
+    .tabs .tab:hover { background: #e8f0f7; }
+    .tabs .tab.active { background: #173f63; color: white; border-color: #173f63; }
+    .tabs .tab.active:hover { background: #0f304d; }
+
+    td.clickable { cursor: pointer; }
+    td.clickable:hover { background: #f3f8fc; }
+
+    /* ===== Cine e liber ===== */
+    .lbl { display: block; font-size: 13px; font-weight: 700; color: #526579; margin-bottom: 6px; }
+    .free-controls { display: grid; gap: 14px; }
+    .free-controls select { max-width: 520px; }
+    .free-row { display: grid; grid-template-columns: auto 1fr; gap: 14px 22px; align-items: end; }
+    .seg { display: flex; gap: 6px; flex-wrap: wrap; }
+    .seg button {
+        height: auto; min-height: 46px; padding: 6px 12px;
+        background: white; color: #173f63; border: 1px solid #cbd5e1; border-radius: 10px;
+        display: flex; flex-direction: column; align-items: center; justify-content: center; line-height: 1.15;
+    }
+    .seg button small { font-size: 10.5px; font-weight: 500; color: #64748b; margin-top: 2px; }
+    .seg button small.cls { font-size: 11.5px; font-weight: 800; color: #c2410c; }
+    .seg button.busy { border-color: #f0b48e; background: #fff7f1; }
+    .seg button:hover { background: #e8f0f7; }
+    .seg button.on { background: #173f63; color: white; border-color: #173f63; }
+    .seg button.on small { color: #c9dbeb; }
+    .seg button.on small.cls { color: #ffd2b5; }
+    .seg button.on:hover { background: #0f304d; }
+    .seg button:focus:not(:focus-visible) { outline: none; }
+    #hourSeg button { min-width: 58px; font-size: 17px; }
+
+    .absent-note {
+        background: #fff7f1; border: 1px solid #f6d3bd; border-radius: 14px;
+        padding: 12px 16px; margin-bottom: 16px; font-size: 16px; color: #7c2d12;
+    }
+    .absent-note .cls { font-size: 22px; font-weight: 900; color: #0b5b97; margin: 0 4px; }
+    .absent-note.calm { background: #f1f5f9; border-color: #d7e0e8; color: #475569; }
+    .free-head { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; flex-wrap: wrap; margin: 4px 2px 12px; }
+    .free-title { font-size: 22px; font-weight: 800; color: #173f63; }
+    .free-title .count { font-size: 14px; background: #e2ebf3; color: #315f88; border-radius: 999px; padding: 2px 10px; margin-left: 6px; vertical-align: middle; }
+    .free-when { font-size: 14px; color: #64748b; }
+
+    .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 10px; }
+    .cand { background: white; border-radius: 12px; padding: 12px 14px; border: 1px solid #e3eaf1; box-shadow: 0 3px 12px rgba(25,55,85,.05); }
+    .cand.none { opacity: .6; }
+    .cand-name { all: unset; cursor: pointer; font-weight: 800; font-size: 15px; color: #173f63; }
+    .cand-name:hover { background: none; text-decoration: underline; }
+    .cand-subj { font-size: 13px; color: #475569; margin-top: 3px; }
+    .status { display: flex; align-items: center; gap: 7px; font-size: 12.5px; color: #475569; margin-top: 8px; }
+    .dot { width: 9px; height: 9px; border-radius: 50%; flex: none; background: #cbd5e1; }
+    .cand.in .dot { background: #16a34a; }
+    .cand.in .status { color: #166534; font-weight: 700; }
+    .cand.near .dot { background: #2d6a96; }
+    .cand.far .dot { background: #d4a017; }
+    .tag-same { display: inline-block; margin-top: 8px; font-size: 11.5px; font-weight: 700; background: #e6f0fa; color: #1d4f80; border-radius: 7px; padding: 2px 8px; }
+    .empty { background: white; border-radius: 12px; padding: 14px; color: #64748b; font-size: 14px; border: 1px dashed #cbd5e1; }
+
     @media (max-width: 800px) {
+        .free-row { grid-template-columns: 1fr; }
+        .seg { flex-wrap: nowrap; gap: 4px; }
+        .seg button, #hourSeg button { flex: 1; min-width: 0; padding: 6px 2px; font-size: 14px; }
         .controls { grid-template-columns: 1fr; }
         .teacher-name { font-size: 21px; }
         .top h1 { font-size: 23px; }
@@ -183,7 +247,7 @@
 
     @media print {
         body { background: white; }
-        .top, .search-card, .footer { display: none !important; }
+        .top, .search-card, .footer, .tabs { display: none !important; }
         .wrap { width: 100%; margin: 0; }
         .table-card { box-shadow: none; overflow: visible; }
         .info { margin: 0 0 10px; }
@@ -200,6 +264,12 @@
 </div>
 
 <div class="wrap">
+    <nav class="tabs">
+        <button type="button" class="tab active" data-view="viewTeacher">Orarul profesorului</button>
+        <button type="button" class="tab" data-view="viewFree">Cine e liber</button>
+    </nav>
+
+    <section id="viewTeacher" class="view">
     <div class="search-card">
         <div class="controls">
             <div>
@@ -219,7 +289,7 @@
 
     <div class="info">
         <div id="teacherName" class="teacher-name"></div>
-        <div class="hint">Clasa este evidențiată mare • disciplina și cabinetul sunt mai mici</div>
+        <div class="hint">Clasa este evidențiată mare • disciplina și cabinetul sunt mai mici • apasă pe o lecție ca să vezi cine o poate înlocui</div>
     </div>
 
     <div class="table-card">
@@ -237,6 +307,28 @@
             <tbody></tbody>
         </table>
     </div>
+
+    </section>
+
+    <section id="viewFree" class="view" hidden>
+        <div class="search-card free-controls">
+            <div>
+                <label for="absentSelect">Cine lipsește?</label>
+                <select id="absentSelect"></select>
+            </div>
+            <div class="free-row">
+                <div>
+                    <span class="lbl">Ziua</span>
+                    <div class="seg" id="daySeg"></div>
+                </div>
+                <div>
+                    <span class="lbl">Lecția</span>
+                    <div class="seg" id="hourSeg"></div>
+                </div>
+            </div>
+        </div>
+        <div id="freeResult"></div>
+    </section>
 
     <div class="footer">
         Cabinete V–XII conform amplasării 05.10–25.10.2026.
@@ -312,6 +404,11 @@ function showTeacher(name) {
             const items = schedules[name][day][lesson] || [];
             count += items.length;
             td.innerHTML = lessonHTML(items);
+            if (items.length) {
+                td.classList.add("clickable");
+                td.title = "Apasă ca să vezi cine poate înlocui";
+                td.addEventListener("click", () => openFree(name, day, lesson));
+            }
             tr.appendChild(td);
         });
 
@@ -342,10 +439,239 @@ search.addEventListener("input", () => {
     }
 });
 
+/* =====================================================================
+   CINE E LIBER
+   ===================================================================== */
+const DP = "Dezvoltare personală";
+
+// Aduce denumirea din orar la o disciplină de bază (opționalele intră la disciplina lor)
+function disciplineOf(subject, className) {
+    const s = normalizeText(subject);
+    if (parseInt(className, 10) <= 4 && !/engl|franc|germ/.test(s)) return "Clase primare";
+    if (/educatie fizica/.test(s)) return "Educație fizică";
+    if (/dezvoltare personala/.test(s)) return DP;
+    if (/matemat|geometri|aritmetic|abacus/.test(s)) return "Matematică";
+    if (/informatic|programare/.test(s)) return "Informatică";
+    if (/fizica/.test(s)) return "Fizică";
+    if (/chimie/.test(s)) return "Chimie";
+    if (/biologie|sanatate/.test(s)) return "Biologie";
+    if (/geografi/.test(s)) return "Geografie";
+    if (/stiinte/.test(s)) return "Științe";
+    if (/engl|school of tomorrow/.test(s)) return "Limba engleză";
+    if (/francez/.test(s)) return "Limba franceză";
+    if (/german/.test(s)) return "Limba germană";
+    if (/romana|literatura|lectur|citind|comunicarii/.test(s)) return "Limba română";
+    if (/istori|holocaust|integrarea/.test(s)) return "Istorie";
+    if (/societate|drepturile|intercultural|toleranta|film/.test(s)) return "Educație pentru societate";
+    if (/muzical/.test(s)) return "Educație muzicală";
+    if (/plastic/.test(s)) return "Educație plastică";
+    if (/tehnologic/.test(s)) return "Educație tehnologică";
+    return subject;
+}
+
+// Ce discipline predă fiecare profesor (o singură oră opțională nu se ia în calcul)
+const profiles = {};
+teachers.forEach(name => {
+    const count = {};
+    days.forEach(day => {
+        for (let h = 1; h <= 7; h++) {
+            (schedules[name][day][h] || []).forEach(it => {
+                const d = disciplineOf(it.subject, it.class);
+                count[d] = (count[d] || 0) + 1;
+            });
+        }
+    });
+    const byCount = Object.keys(count).sort((a, b) => count[b] - count[a]);
+    let list = byCount.filter(d => count[d] >= 2);
+    if (!list.length) list = byCount;
+    let shown = list.filter(d => d !== DP);
+    if (!shown.length) shown = list.slice(0, 1);
+    profiles[name] = { disciplines: list, shown: shown.slice(0, 2) };
+});
+
+function lessonsAt(name, day, h) {
+    return (schedules[name] && schedules[name][day] && schedules[name][day][h]) || [];
+}
+function lessonHours(name, day) {
+    const r = [];
+    for (let h = 1; h <= 7; h++) if (lessonsAt(name, day, h).length) r.push(h);
+    return r;
+}
+
+// Luni–joi profesorii rămân la școală până la această oră, chiar dacă au terminat lecțiile.
+// Vinerea pot pleca după ultima lecție.
+const STAY_UNTIL = "14:00";
+const STAY_EXCEPT = ["Vineri"];
+
+function toMinutes(hhmm) {
+    const [hh, mm] = hhmm.split(":").map(Number);
+    return hh * 60 + mm;
+}
+// „prima lecție”, „lecția a 4-a”
+function lessonName(n) {
+    return Number(n) === 1 ? "prima lecție" : "lecția a " + n + "-a";
+}
+
+// E la școală la lecția h? (rank mai mic = mai potrivit)
+function presence(name, day, h) {
+    const hrs = lessonHours(name, day);
+    if (!hrs.length) return { rank: 3, cls: "none", text: "liber toată ziua" };
+    const before = hrs.filter(x => x < h), after = hrs.filter(x => x > h);
+    const prev = before.length ? before[before.length - 1] : null;
+    const next = after.length ? after[0] : null;
+    if (prev !== null && next !== null) return { rank: 0, cls: "in", text: "e la școală" };
+    if (prev !== null && !STAY_EXCEPT.includes(day) &&
+        toMinutes(times[h].split("–")[0]) < toMinutes(STAY_UNTIL)) {
+        return { rank: 0, cls: "in", text: "e la școală" };
+    }
+    if (prev === h - 1) return { rank: 1, cls: "near", text: "a terminat după " + lessonName(prev) };
+    if (next === h + 1) return { rank: 1, cls: "near", text: "vine la " + lessonName(next) };
+    if (prev !== null) return { rank: 2, cls: "far", text: "a terminat după " + lessonName(prev) };
+    return { rank: 2, cls: "far", text: "vine la " + lessonName(next) };
+}
+
+function currentLesson() {
+    const now = new Date();
+    const mins = now.getHours() * 60 + now.getMinutes();
+    for (let h = 1; h <= 7; h++) {
+        const [hh, mm] = times[h].split("–")[1].split(":").map(Number);
+        if (mins < hh * 60 + mm) return h;
+    }
+    return 1;
+}
+
+const freeState = { day: "Luni", hour: 1, absent: "" };
+const daySeg = document.getElementById("daySeg");
+const hourSeg = document.getElementById("hourSeg");
+const absentSelect = document.getElementById("absentSelect");
+const freeResult = document.getElementById("freeResult");
+
+function renderFree() {
+    const { day, hour: h, absent } = freeState;
+
+    [...daySeg.children].forEach(b => b.classList.toggle("on", b.dataset.day === day));
+    // la orele în care profesorul absent are lecție apare clasa în loc de oră
+    hourSeg.innerHTML = Object.keys(times).map(x => {
+        const its = absent ? lessonsAt(absent, day, x) : [];
+        const sub = its.length
+            ? `<small class="cls">${its.map(i => i.class).join("/")}</small>`
+            : `<small>${times[x].split("–")[0]}</small>`;
+        const cls = (its.length ? "busy " : "") + (Number(x) === h ? "on" : "");
+        return `<button type="button" data-hour="${x}" class="${cls}"><b>${x}</b>${sub}</button>`;
+    }).join("");
+
+    const items = absent ? lessonsAt(absent, day, h) : [];
+    const target = new Set(items.map(it => disciplineOf(it.subject, it.class)).filter(d => d !== DP));
+
+    let html = "";
+    if (absent && items.length) {
+        const subj = [...new Set(items.map(it => it.subject))].join(", ");
+        const room = items[0].room ? ", cab. " + items[0].room : "";
+        html += `<div class="absent-note"><b>${absent}</b> are la ${lessonName(h)}:
+            <span class="cls">${items.map(it => it.class + (it.group ? " gr. " + it.group : "")).join(", ")}</span> ${subj}${room}</div>`;
+    } else if (absent) {
+        html += `<div class="absent-note calm">${day} <b>${absent}</b> nu are ${lessonName(h)}.</div>`;
+    }
+
+    const free = teachers
+        .filter(t => t !== absent && lessonsAt(t, day, h).length === 0)
+        .map(t => ({ t, p: presence(t, day, h), same: profiles[t].disciplines.some(d => target.has(d)) }))
+        .sort((a, b) => a.p.rank - b.p.rank || (b.same - a.same) || a.t.localeCompare(b.t, "ro"));
+
+    html += `<div class="free-head">
+        <div class="free-title">${absent && items.length ? "Cine poate înlocui" : "Profesori liberi"}<span class="count">${free.length}</span></div>
+        <div class="free-when">${day}, ${lessonName(h)} · ${times[h]}</div>
+    </div>`;
+
+    html += free.length
+        ? '<div class="cards">' + free.map(({ t, p, same }) => `
+            <div class="cand ${p.cls}">
+                <button type="button" class="cand-name" data-teacher="${t}" title="Vezi orarul">${t}</button>
+                <div class="cand-subj">${profiles[t].shown.join(" · ")}</div>
+                <div class="status"><span class="dot"></span>${p.text}</div>
+                ${same ? '<span class="tag-same">aceeași disciplină</span>' : ""}
+            </div>`).join("") + "</div>"
+        : '<div class="empty">Nimeni nu e liber la această oră.</div>';
+
+    freeResult.innerHTML = html;
+}
+
+function showView(id) {
+    document.querySelectorAll(".view").forEach(v => { v.hidden = v.id !== id; });
+    document.querySelectorAll(".tab").forEach(b => b.classList.toggle("active", b.dataset.view === id));
+    try { history.replaceState(null, "", id === "viewFree" ? "#liberi" : location.pathname + location.search); } catch (e) {}
+}
+
+// Din orarul profesorului: click pe o lecție → cine o poate înlocui
+function openFree(name, day, hour) {
+    freeState.absent = name;
+    freeState.day = day;
+    freeState.hour = Number(hour);
+    absentSelect.value = name;
+    showView("viewFree");
+    renderFree();
+    window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+function openTeacher(name) {
+    search.value = "";
+    fillSelect();
+    showTeacher(name);
+    showView("viewTeacher");
+    window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+function initFree() {
+    daySeg.innerHTML = days.map(d => `<button type="button" data-day="${d}">${d}</button>`).join("");
+    absentSelect.innerHTML = '<option value="">— nimeni, arată toți profesorii liberi —</option>' +
+        teachers.map(t => `<option value="${t}">${t}</option>`).join("");
+
+    const wd = new Date().getDay();
+    freeState.day = (wd >= 1 && wd <= 5) ? days[wd - 1] : "Luni";
+    freeState.hour = currentLesson();
+
+    daySeg.addEventListener("click", e => {
+        const b = e.target.closest("button[data-day]");
+        if (!b) return;
+        freeState.day = b.dataset.day;
+        renderFree();
+    });
+    hourSeg.addEventListener("click", e => {
+        const b = e.target.closest("button[data-hour]");
+        if (!b) return;
+        freeState.hour = Number(b.dataset.hour);
+        renderFree();
+    });
+    absentSelect.addEventListener("change", () => {
+        freeState.absent = absentSelect.value;
+        // dacă la ora aleasă nu are lecție, sare la următoarea lui lecție din ziua aceea
+        if (freeState.absent && !lessonsAt(freeState.absent, freeState.day, freeState.hour).length) {
+            const hrs = lessonHours(freeState.absent, freeState.day);
+            const next = hrs.find(x => x > freeState.hour) || hrs[0];
+            if (next) freeState.hour = next;
+        }
+        renderFree();
+    });
+    freeResult.addEventListener("click", e => {
+        const t = e.target.closest(".cand-name");
+        if (t) openTeacher(t.dataset.teacher);
+    });
+    document.addEventListener("keydown", e => {
+        if (document.getElementById("viewFree").hidden) return;
+        if (/INPUT|SELECT|TEXTAREA/.test(e.target.tagName)) return;
+        if (e.key >= "1" && e.key <= "7") { freeState.hour = Number(e.key); renderFree(); }
+    });
+    document.querySelectorAll(".tab").forEach(b => b.addEventListener("click", () => showView(b.dataset.view)));
+
+    renderFree();
+    if (location.hash === "#liberi") showView("viewFree");
+}
+
 fillSelect();
 
 const preferred = teachers.find(t => normalizeText(t).includes("guranda adrian")) || teachers[0];
 showTeacher(preferred);
+initFree();
 </script>
 
 </body>
